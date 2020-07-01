@@ -104,7 +104,7 @@ int main()
             int urutan;
             cout<<"urutan yg ingin dihapus : ";
             cin>>urutan;
-            deleteNode(&head, urutan);
+            deleteNode(&head, urutan-1);
         }
         if(menu==3)
         {
@@ -114,7 +114,7 @@ int main()
             cout<<"\nMasukkan angka pengganti : ";
             cin>>ganti;
             Insert(ganti,urutan);
-            deleteNode(&head, urutan+1);
+            deleteNode(&head, urutan);
 
         }
         if(menu==4)

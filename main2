@@ -1,0 +1,127 @@
+// insert at nth position
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+using namespace std;
+
+
+struct Node {
+    int data;
+    struct Node *next;
+};
+
+struct Node *head;
+
+void  tampil()
+{
+    struct Node *temp = head;
+    while(temp!=NULL)
+    {
+        cout<<temp->data<<" | ";
+        temp = temp->next;
+    }
+    cout<<"\n";
+}
+void Insert(int data, int posisi)
+{
+    int i;
+    struct Node *temp1  = (struct Node*) malloc(sizeof(struct Node));
+    temp1->data = data;
+    temp1->next = NULL;
+    if(posisi == 1)
+    {
+        temp1->next = head;
+        head = temp1;
+        return;
+    }
+    struct Node *temp2 = head;
+    for(i=0;i<posisi-2;i++)
+    {
+        temp2 = temp2->next;
+    }
+
+    temp1->next = temp2->next;
+    temp2->next = temp1;
+}
+
+void deleteNode(struct Node **head_ref, int position)
+{
+  if (*head_ref == NULL)
+      return;
+
+   struct Node* temp = *head_ref;
+
+    if (position == 0)
+    {
+        *head_ref = temp->next;   // Change head
+        free(temp);               // free old head
+        return;
+    }
+
+    for (int i=0; temp!=NULL && i<position-1; i++)
+         temp = temp->next;
+
+    if (temp == NULL || temp->next == NULL)
+         return;
+
+    struct Node *next = temp->next->next;
+    free(temp->next);  // Free memory
+
+    temp->next = next;  // Unlink the deleted node from list
+}
+
+
+int main()
+{
+        bool keluar = false;
+    head = NULL;
+     while(keluar==false)
+     {
+         int menu;
+        cout << "\n========= Program Linked List By Wisnu ==========" << endl;
+        cout << "Masukkan pilihan operasi yang ingin dilakukan :" << endl;
+        cout<<"\n1. Insert\t 3. Ganti (Set)";
+        cout<<"\n2. Delete\t 4. Print (Tampilkan)";
+        cout<<"\n\t0. Keluar\n";
+        cout<<"\npilihan : ";
+        cin>>menu;
+
+        if(menu==0)
+        {
+            keluar = true;
+        }
+        if(menu==1)
+        {
+            int urutan, angka;
+            cout<<"\ningin insert ke urutan berapa? : ";
+            cin>>urutan;
+            cout<<"\nMasukkan angka yang ingin insert : ";
+            cin>>angka;
+            Insert(angka,urutan);
+        }
+        if(menu==2)
+        {
+            int urutan;
+            cout<<"urutan yg ingin dihapus : ";
+            cin>>urutan;
+            deleteNode(&head, urutan);
+        }
+        if(menu==3)
+        {
+            int urutan, ganti;
+            cout<<"\nurutan ke berapa yang ingin diganti? : ";
+            cin>>urutan;
+            cout<<"\nMasukkan angka pengganti : ";
+            cin>>ganti;
+            Insert(ganti,urutan);
+            deleteNode(&head, urutan+1);
+
+        }
+        if(menu==4)
+        {
+            tampil();
+        }
+     }
+
+    return 0;
+}
